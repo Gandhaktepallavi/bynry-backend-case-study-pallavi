@@ -1,0 +1,27 @@
+CREATE TABLE Companies (
+    Id INT PRIMARY KEY IDENTITY,
+    Name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Warehouses (
+    Id INT PRIMARY KEY IDENTITY,
+    CompanyId INT FOREIGN KEY REFERENCES Companies(Id),
+    Name VARCHAR(100),
+    Location VARCHAR(200)
+);
+
+CREATE TABLE Products (
+    Id INT PRIMARY KEY IDENTITY,
+    CompanyId INT FOREIGN KEY REFERENCES Companies(Id),
+    Name VARCHAR(100),
+    SKU VARCHAR(50) UNIQUE,
+    Price DECIMAL(10,2),
+    ProductType VARCHAR(50)
+);
+
+CREATE TABLE Inventory (
+    Id INT PRIMARY KEY IDENTITY,
+    ProductId INT FOREIGN KEY REFERENCES Products(Id),
+    WarehouseId INT FOREIGN KEY REFERENCES Warehouses(Id),
+    Quantity INT NOT NULL
+);
