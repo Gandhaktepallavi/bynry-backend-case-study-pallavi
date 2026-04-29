@@ -2,21 +2,28 @@
 
 ## Issues Found
 
-1. No input validation
-2. Duplicate SKU possible
-3. Two separate commits (partial failure risk)
-4. No transaction rollback
-5. Product wrongly tied to one warehouse
-6. No error handling
-7. Price precision issue
+1. No request validation for required fields.
+2. SKU uniqueness not checked.
+3. Product commit and inventory commit are separate.
+4. If second insert fails, product remains without inventory.
+5. Product tied to one warehouse though products can exist in multiple warehouses.
+6. No transaction rollback.
+7. Price precision issues if float used.
+8. No exception handling.
 
-## Impact
+## Production Impact
 
-- Server crashes
 - Duplicate products
-- Inconsistent inventory
-- Bad financial values
+- Broken inventory data
+- Server errors
+- Financial inaccuracies
+- Hard-to-maintain data model
 
-## Fix
+## Recommended Fixes
 
-Use validation, single transaction, unique SKU, decimal price type, rollback handling.
+- Validate request body
+- Add unique constraint on SKU
+- Use one transaction
+- Use decimal for price
+- Keep warehouse relation in Inventory table
+- Add try/catch + rollback
