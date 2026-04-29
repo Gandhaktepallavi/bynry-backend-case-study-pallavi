@@ -2,25 +2,58 @@
 
 ## Tables
 
-- companies
-- warehouses
-- products
-- inventory
-- suppliers
-- product_suppliers
-- inventory_movements
-- product_bundles
+### Companies
+- Id (PK)
+- Name
 
-## Key Decisions
+### Warehouses
+- Id (PK)
+- CompanyId (FK)
+- Name
+- Location
 
-- Products stored in multiple warehouses
-- Inventory separated from products
-- SKU unique
-- Quantity tracked historically
+### Products
+- Id (PK)
+- CompanyId (FK)
+- Name
+- SKU (Unique)
+- Price DECIMAL(10,2)
+- ProductType
 
-## Questions
+### Inventory
+- Id (PK)
+- ProductId (FK)
+- WarehouseId (FK)
+- Quantity
+- UpdatedAt
 
-1. SKU global or company-wise?
-2. Multiple suppliers allowed?
-3. Can stock go negative?
-4. Bundle auto deduction needed?
+### Suppliers
+- Id (PK)
+- CompanyId (FK)
+- Name
+- ContactEmail
+
+### ProductSuppliers
+- ProductId (FK)
+- SupplierId (FK)
+
+### InventoryMovements
+- Id (PK)
+- ProductId
+- WarehouseId
+- ChangeQty
+- Reason
+- CreatedAt
+
+### ProductBundles
+- BundleProductId
+- ChildProductId
+- QuantityRequired
+
+## Questions for Product Team
+
+1. Is SKU unique globally or per company?
+2. Can one product have many suppliers?
+3. Can inventory go negative?
+4. Should bundles auto-deduct child items?
+5. Need audit history retention policy?
